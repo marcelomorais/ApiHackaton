@@ -80,9 +80,7 @@ namespace ApiHackaton.Controllers
         [Route("DevicesByCustomerId")]
         public JsonResult<Guid?> Authorize(AuthorizedModel authorizedModel)
         {
-            var request = BlackBoxFactory.AssociateDevices(authorizedModel);
-            
-            return Json(request);
+            return Json(BlackBoxFactory.AssociateDevices(authorizedModel));
         }
 
     }
