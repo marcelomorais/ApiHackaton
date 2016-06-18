@@ -23,5 +23,7 @@ namespace ApiHackaton.Controllers
         {
             return Json(BlackBoxClientApi.GetMerchants());
         }
+
+
     }
 }
