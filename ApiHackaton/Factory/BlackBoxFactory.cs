@@ -71,7 +71,7 @@ namespace ApiHackaton.Factory
                 device.CustomerId = authorizedModel.CustomerId;
                 device.OfferId = item.Id;
                 device = BlackBoxClientApi.ConnectDeviceToOffer(device);
-                deviceOffer.Add(new DeviceOffer { DeviceId = device.Id, Offer = item });
+                deviceOffer.Add(new DeviceOffer { TokenName = authorizedModel.TokenName ,DeviceId = device.Id, Offer = item });
             }
 
             var saveOnMemory = SaveListDeviceOffers(deviceOffer);
