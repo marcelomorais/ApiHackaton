@@ -21,6 +21,7 @@ namespace ApiHackaton.Controllers
 
         public JsonResult<List<Merchant>> GetCustomer()
         {
+            var a = 1;
             return Json(BlackBoxClientApi.GetMerchants());
         }
 
