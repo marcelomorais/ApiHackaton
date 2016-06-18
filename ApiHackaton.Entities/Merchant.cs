@@ -4,7 +4,7 @@ namespace ApiHackaton.Entities
 {
     public class Merchant
     {
-        public string MerchantId { get; set; }
+        public Guid MerchantId { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
         public string MerchantKey { get; set; }

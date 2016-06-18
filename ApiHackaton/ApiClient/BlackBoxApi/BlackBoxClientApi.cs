@@ -35,14 +35,24 @@ namespace ApiHackaton.ApiClient.BlackBoxApi
 
             return url;
         }
-
+        
         public List<Merchant> GetMerchants()
         {
             var httpRequest = new RestRequest(@"merchant/", Method.GET) { RequestFormat = DataFormat.Json };
-           
+            httpRequest.AddHeader("Content-Type", "application/json");
             var response = RestClient.Execute(httpRequest);
 
             return JsonDeserializer.Deserialize<List<Merchant>>(response);
+        }
+
+        public List<Offer> GetOffersByMerchantId(Guid? merchantId)
+        {
+           
+                var httpRequest = new RestRequest(string.Concat(@"offer/merchant/", merchantId == Guid.Empty || merchantId == null ? MerchantId : merchantId.ToString()), Method.GET) { RequestFormat = DataFormat.Json };
+            httpRequest.AddHeader("Content-Type", "application/json");
+            var response = RestClient.Execute(httpRequest);
+
+            return JsonDeserializer.Deserialize<List<Offer>>(response);
         }
 
         public List<Customer> Getcustomers()
