@@ -39,7 +39,7 @@ namespace ApiHackaton.ApiClient.BlackBoxApi
         public List<Merchant> GetMerchants()
         {
             var httpRequest = new RestRequest(@"merchant/", Method.GET) { RequestFormat = DataFormat.Json };
-
+            httpRequest.AddHeader("Content-Type", "application/json");
             var response = RestClient.Execute(httpRequest);
 
             return JsonDeserializer.Deserialize<List<Merchant>>(response);
@@ -47,14 +47,9 @@ namespace ApiHackaton.ApiClient.BlackBoxApi
 
         public List<Offer> GetOffersByMerchantId(Guid? merchantId)
         {
-            var httpRequest = new RestRequest(@"offers/", Method.GET) { RequestFormat = DataFormat.Json };
+           
+                var httpRequest = new RestRequest(string.Concat(@"offer/merchant/", merchantId == Guid.Empty || merchantId == null ? MerchantId : merchantId.ToString()), Method.GET) { RequestFormat = DataFormat.Json };
             httpRequest.AddHeader("Content-Type", "application/json");
-
-            if (merchantId == null || merchantId == Guid.Empty)
-                httpRequest.AddHeader("MerchantId", MerchantId);
-            else
-                httpRequest.AddHeader("MerchantId", merchantId.ToString());
-
             var response = RestClient.Execute(httpRequest);
 
             return JsonDeserializer.Deserialize<List<Offer>>(response);
