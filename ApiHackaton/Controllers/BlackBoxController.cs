@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 
 namespace ApiHackaton.Controllers
 {
+    [RoutePrefix("BlackBox")]
     public class BlackBoxController : ApiController
     {
         public BlackBoxClientApi BlackBoxClientApi;
@@ -23,40 +24,50 @@ namespace ApiHackaton.Controllers
             JsonSerializerSettings = new JsonSerializerSettings();
         }
 
-        [System.Web.Http.HttpGet]
+        [HttpGet]
+        [Route("Merchants")]
         public JsonResult<List<Merchant>> Merchants()
         {
             return Json(BlackBoxClientApi.GetMerchants());
         }
-        [System.Web.Http.HttpGet]
+        [HttpGet]
+        [Route("OffersByMerchantId")]
         public JsonResult<List<Offer>> OffersByMerchantId(Guid? merchantId = null)
         {
             return Json(BlackBoxClientApi.GetOffersByMerchantId(merchantId));
         }
-        public JsonResult<List<Customer>> GetCustomers()
+        [HttpGet]
+        [Route("Customers")]
+        public JsonResult<List<Customer>> Customers()
         {
             return Json(BlackBoxClientApi.Getcustomers());
         }
-
-        public JsonResult<Customer> GetCustomer([FromUri] int id)
+        [HttpGet]
+        [Route("Customer")]
+        public JsonResult<Customer> Customer([FromUri] int id)
         {
             return Json(BlackBoxClientApi.Getcustomer(id));
         }
 
-        public JsonResult<List<Order>> GetOrders([FromUri]Guid deviceId, [FromUri]Guid merchantId,[FromUri] int? id = null)
+        [HttpGet]
+        [Route("Order/Device")]
+        public JsonResult<List<Order>> DeviceOrder([FromUri]Guid deviceId, [FromUri]Guid merchantId)
         {
-            return Json(BlackBoxClientApi.GetOrders(deviceId, merchantId, id));
+            return Json(BlackBoxClientApi.GetOrders(deviceId, merchantId));
         }
 
-        [System.Web.Http.HttpGet]
-        public JsonResult<Dictionary<string, List<Offer>>> AllOffers()
-        {
-            return Json(BlackBoxFactory.GetAllOffers());
-        }
-        public JsonResult<List<Order>> GetOrdersAuthorized([FromUri]Guid merchantId)
+        [HttpGet]
+        [Route("Order/Authorized")]
+        public JsonResult<List<Order>> AuthorizedOrders([FromUri]Guid merchantId)
         {
             return Json(BlackBoxClientApi.GetOrdersAuthorized(merchantId));
         }
 
+        [HttpGet]
+        [Route("AllOffers")]
+        public JsonResult<Dictionary<string, List<Offer>>> AllOffers()
+        {
+            return Json(BlackBoxFactory.GetAllOffers());
+        }
     }
 }

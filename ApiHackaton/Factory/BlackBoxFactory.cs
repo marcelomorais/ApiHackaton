@@ -24,7 +24,8 @@ namespace ApiHackaton.Factory
             }
 
            var group =  retorno.GroupBy(x => x.MerchantId);
-            var items = new Dictionary<string, List<Offer>>();
+           var items = new Dictionary<string, List<Offer>>();
+
             foreach (var item in group)
             {
                 items.Add(item.Key, item.ToList());
