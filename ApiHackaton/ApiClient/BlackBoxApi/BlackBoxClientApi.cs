@@ -90,5 +90,15 @@ namespace ApiHackaton.ApiClient.BlackBoxApi
 
             return JsonDeserializer.Deserialize<List<Order>>(response);
         }
+
+        public List<Device> GetDevice()
+        {
+            var httpRequest = new RestRequest(@"device/", Method.GET) { RequestFormat = DataFormat.Json };
+
+            var response = RestClient.Execute(httpRequest);
+
+            return JsonDeserializer.Deserialize<List<Device>>(response);
+        }
+
     }
 }

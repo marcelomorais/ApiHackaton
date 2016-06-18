@@ -2,10 +2,9 @@
 using ApiHackaton.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Results;
-using ApiHackaton.ApiClient.BlackBoxApi;
-using ApiHackaton.Entities;
 using ApiHackaton.Factory;
 using Newtonsoft.Json;
 
@@ -51,9 +50,9 @@ namespace ApiHackaton.Controllers
 
         [HttpGet]
         [Route("Order/Device")]
-        public JsonResult<List<Order>> DeviceOrder([FromUri]Guid deviceId, [FromUri]Guid merchantId)
+        public JsonResult<List<Order>> DeviceOrder([FromUri]Guid deviceId, [FromUri]Guid merchantId, int? id = null)
         {
-            return Json(BlackBoxClientApi.GetOrders(deviceId, merchantId));
+            return Json(BlackBoxClientApi.GetOrders(deviceId, merchantId, id));
         }
 
         [HttpGet]
@@ -69,5 +68,14 @@ namespace ApiHackaton.Controllers
         {
             return Json(BlackBoxFactory.GetAllOffers());
         }
+
+        [HttpGet]
+        [Route("DevicesByCustomerId")]
+        public JsonResult<List<Device>> DevicesByCustomerId(int customerId)
+        {
+            return Json(BlackBoxClientApi.GetDevice().Where(x => x.CustomerId == customerId).ToList());
+        }
+
+
     }
 }
