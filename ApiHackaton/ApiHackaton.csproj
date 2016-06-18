@@ -158,7 +158,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiClient\BlackBoxApi\BlackBoxClientApi.cs" />
-    <Compile Include="ApiClient\Contracts\Merchant.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -254,7 +253,12 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ApiHackaton.Entities\ApiHackaton.Entities.csproj">
+      <Project>{1d3abd54-0f21-4129-a50c-1aa24838e57e}</Project>
+      <Name>ApiHackaton.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
