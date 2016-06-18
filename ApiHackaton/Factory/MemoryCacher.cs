@@ -3,7 +3,7 @@ using System.Runtime.Caching;
 
 namespace ApiHackaton.Factory
 {
-    public class MemoryCacher
+    public static class MemoryCacher
     {
         public static T GetValue<T>(string key)
         {

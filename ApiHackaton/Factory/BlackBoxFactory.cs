@@ -12,12 +12,10 @@ namespace ApiHackaton.Factory
     public class BlackBoxFactory
     {
         private BlackBoxClientApi BlackBoxClientApi;
-        private MemoryCacher memoryCacher;
 
         public BlackBoxFactory()
         {
             BlackBoxClientApi = new BlackBoxClientApi();
-            memoryCacher = new MemoryCacher();
         }
 
         public Dictionary<string, List<Offer>> GetAllOffers()
@@ -50,17 +48,6 @@ namespace ApiHackaton.Factory
             return saved ? orderId : Guid.Empty;
         }
 
-        //public List<Offer> GetOfferByOrderId(Guid orderId)
-        //{
-        //    if (MemoryCache.Default.Contains(CacheKey))
-        //    {
-        //        // expensiveString = MemoryCache.Default[CacheKey] as string;
-        //    }
-
-
-        //    return null;
-        //}
-
         public Guid? AssociateDevices(AuthorizedModel authorizedModel)
         {
             var deviceOffer = new List<DeviceOffer>();
@@ -82,7 +69,17 @@ namespace ApiHackaton.Factory
             return null;
         }
 
+        public List<DeviceOffer> GetDeviceOfferByOrderId(Guid orderId)
+        {
+            var list = new List<DeviceOffer>();
+
+            if (MemoryCacher.CheckIfAlreadyExists<List<DeviceOffer>>(orderId.ToString()))
+            {
+                list = MemoryCacher.GetValue<List<DeviceOffer>>(orderId.ToString());
+            }
+
+            return list;
+        }
+
     }
-
-
 }

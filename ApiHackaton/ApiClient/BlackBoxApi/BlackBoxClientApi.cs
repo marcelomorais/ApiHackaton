@@ -94,7 +94,7 @@ namespace ApiHackaton.ApiClient.BlackBoxApi
         public Device CreateDevice(string type = "VIRTUAL")
         {
             var httpRequest = new RestRequest(@"device", Method.POST) { RequestFormat = DataFormat.Json };
-            httpRequest.AddBody(type);
+            httpRequest.AddParameter("Type",type);
             var response = RestClient.Execute(httpRequest);
 
             return JsonDeserializer.Deserialize<Device>(response);
