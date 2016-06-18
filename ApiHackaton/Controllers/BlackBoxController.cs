@@ -76,6 +76,14 @@ namespace ApiHackaton.Controllers
             return Json(BlackBoxClientApi.GetDevice().Where(x => x.CustomerId == customerId).ToList());
         }
 
+        [HttpPost]
+        [Route("DevicesByCustomerId")]
+        public JsonResult<Guid?> Authorize(AuthorizedModel authorizedModel)
+        {
+            var request = BlackBoxFactory.AssociateDevices(authorizedModel);
+            
+            return Json(request);
+        }
 
     }
 }

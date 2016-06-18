@@ -8,8 +8,8 @@ namespace ApiHackaton.Entities
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
         public string Type { get; set; }
-        public object CustomerId { get; set; }
-        public object OfferId { get; set; }
+        public int? CustomerId { get; set; }
+        public int? OfferId { get; set; }
     }
 
 }

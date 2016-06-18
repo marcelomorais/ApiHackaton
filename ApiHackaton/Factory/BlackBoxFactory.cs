@@ -41,17 +41,14 @@ namespace ApiHackaton.Factory
             return items;
         }
 
-        public Guid SaveListOffers(List<Offer> offfers)
+        public Guid SaveListDeviceOffers(List<DeviceOffer> deviceOffers)
         {
             var orderId = Guid.NewGuid();
 
-            MemoryCacher.Add(orderId.ToString(), offfers, null);
+            var saved = MemoryCacher.Add(orderId.ToString(), deviceOffers, null);
             
-            return orderId;
+            return saved ? orderId : Guid.Empty;
         }
-
-
-
 
         //public List<Offer> GetOfferByOrderId(Guid orderId)
         //{
@@ -64,6 +61,26 @@ namespace ApiHackaton.Factory
         //    return null;
         //}
 
+        public Guid? AssociateDevices(AuthorizedModel authorizedModel)
+        {
+            var deviceOffer = new List<DeviceOffer>();
+
+            foreach (var item in authorizedModel.Offers)
+            {
+                var device = BlackBoxClientApi.CreateDevice();
+                device.CustomerId = authorizedModel.CustomerId;
+                device.OfferId = item.Id;
+                device = BlackBoxClientApi.ConnectDeviceToOffer(device);
+                deviceOffer.Add(new DeviceOffer { DeviceId = device.Id, Offer = item });
+            }
+
+            var saveOnMemory = SaveListDeviceOffers(deviceOffer);
+
+            if (saveOnMemory != Guid.Empty)
+                return saveOnMemory;
+
+            return null;
+        }
 
     }
 
