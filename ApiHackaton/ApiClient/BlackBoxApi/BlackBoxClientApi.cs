@@ -73,9 +73,9 @@ namespace ApiHackaton.ApiClient.BlackBoxApi
             return JsonDeserializer.Deserialize<Customer>(response);
         }
 
-        public List<Order> GetOrders(Guid deviceId, Guid merchantId)
+        public List<Order> GetOrders(Guid deviceId, Guid merchantId, int? id)
         {
-            var httpRequest = new RestRequest(string.Format(@"order/?DeviceId=/{0}&{1}", deviceId, merchantId), Method.GET) { RequestFormat = DataFormat.Json };
+            var httpRequest = new RestRequest(string.Format(@"order/?DeviceId=/{0}&{1}{2}", deviceId, merchantId, id == null ? string.Empty : string.Format("&id={0}", id)), Method.GET) { RequestFormat = DataFormat.Json };
 
             var response = RestClient.Execute(httpRequest);
 
@@ -111,5 +111,15 @@ namespace ApiHackaton.ApiClient.BlackBoxApi
 
             return false;
         }
+
+        public List<Device> GetDevice()
+        {
+            var httpRequest = new RestRequest(@"device/", Method.GET) { RequestFormat = DataFormat.Json };
+
+            var response = RestClient.Execute(httpRequest);
+
+            return JsonDeserializer.Deserialize<List<Device>>(response);
+        }
+
     }
 }
