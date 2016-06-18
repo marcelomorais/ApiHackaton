@@ -3,7 +3,7 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using System.Web.Mvc;
 using ApiHackaton.ApiClient.BlackBoxApi;
-using ApiHackaton.ApiClient.Contracts;
+using ApiHackaton.Entities;
 
 namespace ApiHackaton.Controllers
 {

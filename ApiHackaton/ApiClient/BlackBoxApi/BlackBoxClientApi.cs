@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using ApiHackaton.ApiClient.Contracts;
+using ApiHackaton.Entities;
 using RestSharp;
 using RestSharp.Deserializers;
 

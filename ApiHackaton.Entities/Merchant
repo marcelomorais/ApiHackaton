@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ApiHackaton.ApiClient.Contracts
+namespace ApiHackaton.Entities
 {
     public class Merchant
     {
@@ -14,5 +14,4 @@ namespace ApiHackaton.ApiClient.Contracts
         public string ImageUrl { get; set; }
         public bool IsEnabled { get; set; }
     }
-
 }
