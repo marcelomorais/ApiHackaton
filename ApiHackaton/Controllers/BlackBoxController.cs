@@ -10,6 +10,7 @@ namespace ApiHackaton.Controllers
     public class BlackBoxController : ApiController
     {
         public BlackBoxClientApi BlackBoxClientApi;
+
         public BlackBoxController()
         {
             BlackBoxClientApi = new BlackBoxClientApi();
@@ -19,12 +20,14 @@ namespace ApiHackaton.Controllers
             return Json(BlackBoxClientApi.GetMerchants());
         }
 
-        public JsonResult<List<Merchant>> GetCustomer()
+        public JsonResult<List<Customer>> GetCustomers()
         {
-            var a = 1;
-            return Json(BlackBoxClientApi.GetMerchants());
+            return Json(BlackBoxClientApi.Getcustomers());
         }
 
-
+        public JsonResult<Customer> GetCustomer([FromUri] int id)
+        {
+            return Json(BlackBoxClientApi.Getcustomer(id));
+        }
     }
 }

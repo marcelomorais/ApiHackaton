@@ -36,7 +36,6 @@ namespace ApiHackaton.ApiClient.BlackBoxApi
             return url;
         }
 
-
         public List<Merchant> GetMerchants()
         {
             var httpRequest = new RestRequest(@"merchant/", Method.GET) { RequestFormat = DataFormat.Json };
@@ -46,5 +45,22 @@ namespace ApiHackaton.ApiClient.BlackBoxApi
             return JsonDeserializer.Deserialize<List<Merchant>>(response);
         }
 
+        public List<Customer> Getcustomers()
+        {
+            var httpRequest = new RestRequest(@"customer/", Method.GET) { RequestFormat = DataFormat.Json };
+
+            var response = RestClient.Execute(httpRequest);
+
+            return JsonDeserializer.Deserialize<List<Customer>>(response);
+        }
+
+        public Customer Getcustomer(int id)
+        {
+            var httpRequest = new RestRequest(string.Format(@"customer/{0}", id), Method.GET) { RequestFormat = DataFormat.Json };
+
+            var response = RestClient.Execute(httpRequest);
+
+            return JsonDeserializer.Deserialize<Customer>(response);
+        }
     }
 }
