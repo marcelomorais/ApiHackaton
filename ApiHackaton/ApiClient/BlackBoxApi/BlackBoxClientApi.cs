@@ -90,6 +90,28 @@ namespace ApiHackaton.ApiClient.BlackBoxApi
 
             return JsonDeserializer.Deserialize<List<Order>>(response);
         }
+        
+        public Device CreateDevice(string type = "VIRTUAL")
+        {
+            var httpRequest = new RestRequest(@"device", Method.POST) { RequestFormat = DataFormat.Json };
+            httpRequest.AddBody(type);
+            var response = RestClient.Execute(httpRequest);
+
+            return JsonDeserializer.Deserialize<Device>(response);
+        }
+        
+        public bool Authorize(string deviceId)
+        {
+            var httpRequest = new RestRequest(@"device", Method.POST) { RequestFormat = DataFormat.Json };
+            httpRequest.AddBody(deviceId);
+
+            var response = RestClient.Execute(httpRequest);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.Created)
+                return true;
+
+            return false;
+        }
 
         public List<Device> GetDevice()
         {
@@ -98,6 +120,16 @@ namespace ApiHackaton.ApiClient.BlackBoxApi
             var response = RestClient.Execute(httpRequest);
 
             return JsonDeserializer.Deserialize<List<Device>>(response);
+        }
+
+        public Device ConnectDeviceToOffer(Device device)
+        {
+
+            var httpRequest = new RestRequest(@"device/", Method.PUT) { RequestFormat = DataFormat.Json };
+            httpRequest.AddBody(device);
+            var response = RestClient.Execute(httpRequest);
+
+            return JsonDeserializer.Deserialize<Device>(response);
         }
 
     }

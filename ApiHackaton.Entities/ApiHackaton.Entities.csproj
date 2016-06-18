@@ -40,8 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthorizedModel.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="Device.cs" />
+    <Compile Include="DeviceOffer.cs" />
     <Compile Include="Merchant.cs" />
     <Compile Include="Offer.cs" />
     <Compile Include="Order.cs" />
