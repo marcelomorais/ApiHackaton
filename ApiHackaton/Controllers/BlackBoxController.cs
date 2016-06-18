@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Results;
-using System.Web.Mvc;
 using ApiHackaton.ApiClient.BlackBoxApi;
 using ApiHackaton.Entities;
+using System;
 
 namespace ApiHackaton.Controllers
 {
@@ -28,6 +28,16 @@ namespace ApiHackaton.Controllers
         public JsonResult<Customer> GetCustomer([FromUri] int id)
         {
             return Json(BlackBoxClientApi.Getcustomer(id));
+        }
+
+        public JsonResult<List<Order>> GetOrders([FromUri]Guid deviceId, [FromUri]Guid merchantId)
+        {
+            return Json(BlackBoxClientApi.GetOrders(deviceId, merchantId));
+        }
+
+        public JsonResult<List<Order>> GetOrdersAuthorized([FromUri]Guid merchantId)
+        {
+            return Json(BlackBoxClientApi.GetOrdersAuthorized(merchantId));
         }
     }
 }
