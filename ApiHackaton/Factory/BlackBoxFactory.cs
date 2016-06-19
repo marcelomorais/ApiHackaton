@@ -63,8 +63,21 @@ namespace ApiHackaton.Factory
                     deviceOffer.Add(new DeviceOffer { Label = authorizedModel.Label, DeviceId = device.Id, Offer = item.Offer });
             }
             authorizedModel.DeviceOffers = deviceOffer;
-            
+
             return SaveAuthorizedModel(authorizedModel);
+        }
+
+        public SingleAuthorizedModel AssociateDevice(SingleAuthorizedModel authorizedModel)
+        {
+            var device = BlackBoxClientApi.CreateDevice();
+            device.CustomerId = authorizedModel.CustomerId;
+            device.OfferId = authorizedModel.Offer.Id;
+            device = BlackBoxClientApi.ConnectDeviceToOffer(device);
+
+            if (BlackBoxClientApi.Authorize(device.Id))
+                return authorizedModel;
+
+            return new SingleAuthorizedModel();
         }
 
         public AuthorizedModel GetDeviceOfferByCustomerId(int customerId)

@@ -84,10 +84,17 @@ namespace ApiHackaton.Controllers
         }
 
         [HttpPost]
-        [Route("Shop/Authorize")]
-        public JsonResult<AuthorizedModel> Authorize(AuthorizedModel authorizedModel)
+        [Route("Shop/AuthorizeCart")]
+        public JsonResult<AuthorizedModel> AuthorizeCart(AuthorizedModel authorizedModel)
         {
             return Json(BlackBoxFactory.AssociateDevices(authorizedModel));
+        }
+
+        [HttpPost]
+        [Route("Shop/Authorize")]
+        public JsonResult<SingleAuthorizedModel> Authorize(SingleAuthorizedModel singleAuthorizedModel)
+        {
+            return Json(BlackBoxFactory.AssociateDevice(singleAuthorizedModel));
         }
 
         [HttpGet]
