@@ -33,7 +33,8 @@ namespace ApiHackaton.Factory
 
             foreach (var item in group)
             {
-                items.Add(item.Key, item.ToList());
+                var merchantName = merchants.FirstOrDefault(x => x.MerchantId.ToString() == item.Key).Name;
+                items.Add(merchantName, item.ToList());
             }
 
             return items;
