@@ -102,12 +102,12 @@ namespace ApiHackaton.ApiClient.BlackBoxApi
         
         public bool Authorize(string deviceId)
         {
-            var httpRequest = new RestRequest(@"shop", Method.POST) { RequestFormat = DataFormat.Json };
-            httpRequest.AddBody(deviceId);
+            var httpRequest = new RestRequest(@"blackbox/shop", Method.POST) { RequestFormat = DataFormat.Json };
+            httpRequest.AddParameter("DeviceId",deviceId);
 
             var response = RestClient.Execute(httpRequest);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.Created)
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return true;
 
             return false;
