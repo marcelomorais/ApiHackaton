@@ -91,6 +91,13 @@ namespace ApiHackaton.Controllers
         }
 
         [HttpPost]
+        [Route("Shop/SaveCart")]
+        public JsonResult<AuthorizedModel> SaveCart(AuthorizedModel authorizedModel)
+        {
+            return Json(BlackBoxFactory.SaveAuthorizedModel(authorizedModel));
+        }
+
+        [HttpPost]
         [Route("Shop/Authorize")]
         public JsonResult<SingleAuthorizedModel> Authorize(SingleAuthorizedModel singleAuthorizedModel)
         {
