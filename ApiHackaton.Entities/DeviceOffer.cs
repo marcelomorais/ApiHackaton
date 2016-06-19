@@ -8,7 +8,7 @@ namespace ApiHackaton.Entities
 {
     public class DeviceOffer
     {
-        public string TokenName { get; set; }
+        public string Label { get; set; }
         public string DeviceId { get; set; }
         public Offer Offer { get; set; }
     }

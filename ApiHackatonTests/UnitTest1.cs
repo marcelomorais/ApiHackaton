@@ -25,11 +25,15 @@ namespace ApiHackatonTests
         [TestMethod]
         public void AssociateDevices()
         {
-          var Token =  factory.AssociateDevices(new ApiHackaton.Entities.AuthorizedModel
+          var authorizedModel =  factory.AssociateDevices(new ApiHackaton.Entities.AuthorizedModel
             {
-                Offers = new System.Collections.Generic.List<ApiHackaton.Entities.Offer>()
+                DeviceOffers = new System.Collections.Generic.List<ApiHackaton.Entities.DeviceOffer>()
                 {
-                    new ApiHackaton.Entities.Offer
+                    new ApiHackaton.Entities.DeviceOffer
+                    {
+                        DeviceId = "3ad1fabc-068e-4d2c-bad9-633680c81eeb",
+                        Label = "Queijo Minas Frescal Orgânico ",
+                        Offer =  new ApiHackaton.Entities.Offer
                     {
                         Id = 1,
                         Label = "Queijo Minas Frescal Orgânico ",
@@ -40,12 +44,13 @@ namespace ApiHackatonTests
                         Quantity = 1,
                         MerchantId = "612a64c0-22e7-4fb9-aa2b-eb31670f207f"
                     }
+                    }
                 },
-                TokenName = "Test",
+                Label = "Test",
                 CustomerId = 1
             });
 
-            var teste = factory.GetDeviceOfferByOrderId(Token.Value);
+            var teste = factory.GetDeviceOfferByCustomerId(authorizedModel.CustomerId);
         }
     }
 }

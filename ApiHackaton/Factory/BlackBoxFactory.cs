@@ -40,48 +40,43 @@ namespace ApiHackaton.Factory
             return items;
         }
 
-        public Guid SaveListDeviceOffers(List<DeviceOffer> deviceOffers)
+        public AuthorizedModel SaveAuthorizedModel(AuthorizedModel authorizedModel)
         {
-            var orderId = Guid.NewGuid();
+            authorizedModel.CartId = Guid.NewGuid();
+            MemoryCacher.Add(authorizedModel.CustomerId.ToString(), authorizedModel, null);
 
-            var saved = MemoryCacher.Add(orderId.ToString(), deviceOffers, null);
-
-            return saved ? orderId : Guid.Empty;
+            return authorizedModel;
         }
 
-        public Guid? AssociateDevices(AuthorizedModel authorizedModel)
+        public AuthorizedModel AssociateDevices(AuthorizedModel authorizedModel)
         {
             var deviceOffer = new List<DeviceOffer>();
 
-            foreach (var item in authorizedModel.Offers)
+            foreach (var item in authorizedModel.DeviceOffers)
             {
                 var device = BlackBoxClientApi.CreateDevice();
                 device.CustomerId = authorizedModel.CustomerId;
-                device.OfferId = item.Id;
+                device.OfferId = item.Offer.Id;
                 device = BlackBoxClientApi.ConnectDeviceToOffer(device);
 
                 if (BlackBoxClientApi.Authorize(device.Id))
-                    deviceOffer.Add(new DeviceOffer { TokenName = authorizedModel.TokenName, DeviceId = device.Id, Offer = item });
+                    deviceOffer.Add(new DeviceOffer { Label = authorizedModel.Label, DeviceId = device.Id, Offer = item.Offer });
             }
-
-            var saveOnMemory = SaveListDeviceOffers(deviceOffer);
-
-            if (saveOnMemory != Guid.Empty)
-                return saveOnMemory;
-
-            return null;
+            authorizedModel.DeviceOffers = deviceOffer;
+            
+            return SaveAuthorizedModel(authorizedModel);
         }
 
-        public List<DeviceOffer> GetDeviceOfferByOrderId(Guid orderId)
+        public AuthorizedModel GetDeviceOfferByCustomerId(int customerId)
         {
-            var list = new List<DeviceOffer>();
+            var authorizedModel = new AuthorizedModel();
 
-            if (MemoryCacher.CheckIfAlreadyExists<List<DeviceOffer>>(orderId.ToString()))
+            if (MemoryCacher.CheckIfAlreadyExists<AuthorizedModel>(customerId.ToString()))
             {
-                list = MemoryCacher.GetValue<List<DeviceOffer>>(orderId.ToString());
+                authorizedModel = MemoryCacher.GetValue<AuthorizedModel>(customerId.ToString());
             }
 
-            return list;
+            return authorizedModel;
         }
 
         public List<Offer> GetOffersByDevice(Guid deviceId)
