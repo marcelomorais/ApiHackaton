@@ -63,24 +63,31 @@ namespace ApiHackaton.Controllers
         }
 
         [HttpGet]
-        [Route("AllOffers")]
+        [Route("Offer/AllOffers")]
         public JsonResult<Dictionary<string, List<Offer>>> AllOffers()
         {
             return Json(BlackBoxFactory.GetAllOffers());
         }
 
         [HttpGet]
-        [Route("DevicesByCustomerId")]
+        [Route("Device/DevicesByCustomerId")]
         public JsonResult<List<Device>> DevicesByCustomerId(int customerId)
         {
             return Json(BlackBoxClientApi.GetDevice().Where(x => x.CustomerId == customerId).ToList());
         }
 
         [HttpPost]
-        [Route("DevicesByCustomerId")]
+        [Route("Shop/Authorize")]
         public JsonResult<Guid?> Authorize(AuthorizedModel authorizedModel)
         {
             return Json(BlackBoxFactory.AssociateDevices(authorizedModel));
+        }
+
+        [HttpGet]
+        [Route("Device/DeviceOfferByOrderId")]
+        public JsonResult<List<DeviceOffer>> DeviceOfferByOrderId(Guid token)
+        {
+            return Json(BlackBoxFactory.GetDeviceOfferByOrderId(token));
         }
 
     }
