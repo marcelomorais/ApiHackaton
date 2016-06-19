@@ -83,5 +83,23 @@ namespace ApiHackaton.Factory
             return list;
         }
 
+        public List<Offer> GetOffersByDevice(Guid deviceId)
+        {
+            var orders = BlackBoxClientApi.GetOrders(deviceId, null, null);
+            var i = new List<int>();
+            var offers = new List<Offer>();
+            foreach (var order in orders)
+            {
+                if (!i.Contains(order.OfferId))
+                {
+
+                    offers.AddRange(BlackBoxClientApi.GetOfferById(order.OfferId));
+                    i.Add(order.OfferId);
+                }
+            }
+
+            return offers;
+        }
+
     }
 }

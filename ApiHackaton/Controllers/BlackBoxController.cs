@@ -76,6 +76,13 @@ namespace ApiHackaton.Controllers
             return Json(BlackBoxClientApi.GetDevice().Where(x => x.CustomerId == customerId).ToList());
         }
 
+        [HttpGet]
+        [Route("Offer/OfferByDevice")]
+        public JsonResult<List<Offer>> OfferByDevice(Guid deviceId)
+        {
+            return Json(BlackBoxFactory.GetOffersByDevice(deviceId));
+        }
+
         [HttpPost]
         [Route("Shop/Authorize")]
         public JsonResult<Guid?> Authorize(AuthorizedModel authorizedModel)
@@ -89,6 +96,7 @@ namespace ApiHackaton.Controllers
         {
             return Json(BlackBoxFactory.GetDeviceOfferByOrderId(token));
         }
+
 
     }
 }
