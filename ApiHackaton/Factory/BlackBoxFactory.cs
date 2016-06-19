@@ -28,8 +28,8 @@ namespace ApiHackaton.Factory
                 retorno.AddRange(BlackBoxClientApi.GetOffersByMerchantId(merchant.MerchantId));
             }
 
-           var group =  retorno.GroupBy(x => x.MerchantId);
-           var items = new Dictionary<string, List<Offer>>();
+            var group = retorno.GroupBy(x => x.MerchantId);
+            var items = new Dictionary<string, List<Offer>>();
 
             foreach (var item in group)
             {
@@ -44,7 +44,7 @@ namespace ApiHackaton.Factory
             var orderId = Guid.NewGuid();
 
             var saved = MemoryCacher.Add(orderId.ToString(), deviceOffers, null);
-            
+
             return saved ? orderId : Guid.Empty;
         }
 
@@ -58,7 +58,9 @@ namespace ApiHackaton.Factory
                 device.CustomerId = authorizedModel.CustomerId;
                 device.OfferId = item.Id;
                 device = BlackBoxClientApi.ConnectDeviceToOffer(device);
-                deviceOffer.Add(new DeviceOffer { TokenName = authorizedModel.TokenName ,DeviceId = device.Id, Offer = item });
+
+                if (BlackBoxClientApi.Authorize(device.Id))
+                    deviceOffer.Add(new DeviceOffer { TokenName = authorizedModel.TokenName, DeviceId = device.Id, Offer = item });
             }
 
             var saveOnMemory = SaveListDeviceOffers(deviceOffer);

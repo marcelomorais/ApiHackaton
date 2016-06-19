@@ -102,7 +102,7 @@ namespace ApiHackaton.ApiClient.BlackBoxApi
         
         public bool Authorize(string deviceId)
         {
-            var httpRequest = new RestRequest(@"device", Method.POST) { RequestFormat = DataFormat.Json };
+            var httpRequest = new RestRequest(@"shop", Method.POST) { RequestFormat = DataFormat.Json };
             httpRequest.AddBody(deviceId);
 
             var response = RestClient.Execute(httpRequest);
