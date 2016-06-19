@@ -98,12 +98,10 @@ namespace ApiHackaton.Controllers
         }
 
         [HttpGet]
-        [Route("Device/DeviceOfferByOrderId")]
-        public JsonResult<AuthorizedModel> DeviceOfferByCustomerId(int customerId)
+        [Route("Device/AuthorizedModelsByCustomerId")]
+        public JsonResult<List<AuthorizedModel>> AuthorizedModelsByCustomerId(int customerId)
         {
             return Json(BlackBoxFactory.GetDeviceOfferByCustomerId(customerId));
         }
-
-
     }
 }

@@ -43,7 +43,17 @@ namespace ApiHackaton.Factory
         public AuthorizedModel SaveAuthorizedModel(AuthorizedModel authorizedModel)
         {
             authorizedModel.CartId = Guid.NewGuid();
-            MemoryCacher.Add(authorizedModel.CustomerId.ToString(), authorizedModel, null);
+            
+            var authorizedList = new List<AuthorizedModel>();
+
+            if (MemoryCacher.CheckIfAlreadyExists<List<AuthorizedModel>>(authorizedModel.CustomerId.ToString()))
+            {
+                authorizedList = MemoryCacher.GetValue<List<AuthorizedModel>>(authorizedModel.CustomerId.ToString());
+            }
+
+            authorizedList.Add(authorizedModel);
+
+            MemoryCacher.Add(authorizedModel.CustomerId.ToString(), authorizedList, null);
 
             return authorizedModel;
         }
@@ -80,13 +90,13 @@ namespace ApiHackaton.Factory
             return new SingleAuthorizedModel();
         }
 
-        public AuthorizedModel GetDeviceOfferByCustomerId(int customerId)
+        public List<AuthorizedModel> GetDeviceOfferByCustomerId(int customerId)
         {
-            var authorizedModel = new AuthorizedModel();
+            var authorizedModel = new List<AuthorizedModel>();
 
-            if (MemoryCacher.CheckIfAlreadyExists<AuthorizedModel>(customerId.ToString()))
+            if (MemoryCacher.CheckIfAlreadyExists<List<AuthorizedModel>>(customerId.ToString()))
             {
-                authorizedModel = MemoryCacher.GetValue<AuthorizedModel>(customerId.ToString());
+                authorizedModel = MemoryCacher.GetValue<List<AuthorizedModel>>(customerId.ToString());
             }
 
             return authorizedModel;
